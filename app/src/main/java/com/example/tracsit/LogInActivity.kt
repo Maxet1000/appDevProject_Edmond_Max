@@ -1,10 +1,10 @@
 package com.example.tracsit
+import android.app.Activity
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import com.example.tracsit.databinding.ActivityLoginBinding
 
 
-class LogInActivity : AppCompatActivity()  {
+class LogInActivity : Activity()  {
 
     private lateinit var binding: ActivityLoginBinding
     override fun onCreate(savedInstanceState: Bundle?) {
