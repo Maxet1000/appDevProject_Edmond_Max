@@ -7,13 +7,12 @@ import com.example.tracsit.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var main: ActivityMainBinding
-    private lateinit var login: ActivityLoginBinding
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        login = ActivityLoginBinding.inflate(layoutInflater)
-        setContentView(login.root)
+        val intent = Intent(this, LogInActivity::class.java)
+        startActivity(intent)
 
     }
 }
