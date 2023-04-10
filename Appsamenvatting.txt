@@ -1,0 +1,13 @@
+	App name: Tracsit
+
+1) google account login + toestemming gps
+2) Configuration screen (settings doorlopen)
+3) De app zelf (spicifieke settings aanpassen)
+4) Notificatie op voorafgestelde tijd (+ wekker)
+	routeplanner:
+		-automatische plenning met manuele aanpassingen
+	settings: 
+		- thuislocatie / werklocatie
+		- Werkdagen aanpassen
+		- Notificatie warning time (+ wekker)
+		- 
