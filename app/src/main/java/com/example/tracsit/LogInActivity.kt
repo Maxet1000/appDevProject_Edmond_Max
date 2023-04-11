@@ -20,6 +20,7 @@ class LogInActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.regIsterButton.setOnClickListener {  goToSettingsScreen()}
+        binding.buttonGoogleLogIn.setOnClickListener{ goToMainScreen()}
     }
 
 
@@ -36,8 +37,8 @@ class LogInActivity : AppCompatActivity() {
         } else return "wrong password"
     }
 
-    fun goToWelcomeScreen(){
-        val intent = Intent(this, SettingsActivity::class.java)
+    fun goToMainScreen(){
+        val intent = Intent(this, MainActivity::class.java)
         startActivity(intent);
     }
 
