@@ -1,29 +1,25 @@
 package com.example.tracsit
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.tracsit.databinding.ActivityMainBinding
+import com.example.tracsit.databinding.ActivityLoginBinding
 import com.google.android.material.snackbar.Snackbar
 
 
-class MainActivity : AppCompatActivity() {
+class LogInActivity : AppCompatActivity() {
     public val passW = "pw"
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityLoginBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
 
         binding.logInButton.setOnClickListener { view ->
             Snackbar.make(view, snackBarOutPutTest(passW), Snackbar.LENGTH_LONG).setAction("Action", null).show()
         }
         setContentView(binding.root)
 
-        binding.regIsterButton.setOnClickListener {  goToWelcomeScreen()}
-
-        val intent = Intent(this, SettingsActivity::class.java)
-        startActivity(intent)
+        binding.regIsterButton.setOnClickListener {  goToSettingsScreen()}
     }
 
 
@@ -41,10 +37,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun goToWelcomeScreen(){
-        val intent = Intent(this, WelcomeActivity::class.java)
+        val intent = Intent(this, SettingsActivity::class.java)
         startActivity(intent);
     }
 
-//Hierin komt de logica van het inloggen met google
+    fun goToSettingsScreen(){
+        val Intent = Intent(this, SettingsActivity::class.java)
+        startActivity(Intent)
 
+    }
 }
