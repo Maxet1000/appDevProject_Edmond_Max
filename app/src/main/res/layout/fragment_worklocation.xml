@@ -102,7 +102,7 @@
         android:id="@+id/ConfirmWorkLocationButton"
         android:layout_width="81dp"
         android:layout_height="41dp"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="36dp"
         android:text="Done"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

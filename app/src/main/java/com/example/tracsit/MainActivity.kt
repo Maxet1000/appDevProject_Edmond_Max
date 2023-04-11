@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.example.tracsit.databinding.ActivityMainBinding
 
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityMainBinding
@@ -26,14 +27,14 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
-
     }
 
     private fun goToFragment(fragment : Fragment){
-        val fragmentManager = supportFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.fragment_container_layout, fragment)
-        fragmentTransaction.commit()
+        supportFragmentManager.beginTransaction().apply{
+            replace(R.id.fragment_container_layout, fragment)
+            addToBackStack("Fragment_${fragment.id}")
+            commit()
+        }
     }
 
 }

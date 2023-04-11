@@ -19,7 +19,6 @@ class LogInActivity : AppCompatActivity() {
         }
         setContentView(binding.root)
 
-        binding.regIsterButton.setOnClickListener {  goToSettingsScreen()}
         binding.buttonGoogleLogIn.setOnClickListener{ goToMainScreen()}
     }
 
@@ -40,11 +39,5 @@ class LogInActivity : AppCompatActivity() {
     fun goToMainScreen(){
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent);
-    }
-
-    fun goToSettingsScreen(){
-        val Intent = Intent(this, SettingsActivity::class.java)
-        startActivity(Intent)
-
     }
 }

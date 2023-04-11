@@ -27,13 +27,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SettingsActivity"
+            android:name=".WorkLocationFragment"
             android:exported="true" />
         <activity
-            android:name=".WorkLocationActivity"
-            android:exported="true" />
-        <activity
-            android:name=".HomeLocationActivity"
+            android:name=".HomeLocationFragment"
             android:exported="true" />
     </application>
 
