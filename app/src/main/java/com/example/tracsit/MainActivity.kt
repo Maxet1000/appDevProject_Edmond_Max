@@ -9,13 +9,21 @@ import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.fragment.app.Fragment
 import com.example.tracsit.databinding.ActivityMainBinding
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.ktx.Firebase
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityMainBinding
     private lateinit var menuBarToggle: ActionBarDrawerToggle
+    private lateinit var auth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        auth = FirebaseAuth.getInstance()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         goToFragment(HomeFragment())
@@ -47,7 +55,7 @@ class MainActivity : AppCompatActivity() {
         // since these are all events that influence the fragment list, delegate their actions!
         binding.navView.setNavigationItemSelectedListener {
             when (it.itemId) {
-                R.id.logoutButton -> goToLoginScreen()
+                    R.id.logoutButton -> goToLoginScreen()
             }
             true
         }
@@ -62,8 +70,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun goToLoginScreen(){
-        val intent = Intent(this, LogInActivity::class.java)
-        startActivity(intent);
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+
+        var googleSignInClient = GoogleSignIn.getClient(this, gso)
+
+        googleSignInClient.signOut().addOnCompleteListener {
+            val intent= Intent(this, LogInActivity::class.java)
+            var auth = FirebaseAuth.getInstance()
+            auth.signOut()
+            startActivity(intent);
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
