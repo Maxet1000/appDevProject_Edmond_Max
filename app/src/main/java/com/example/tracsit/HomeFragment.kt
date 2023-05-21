@@ -26,27 +26,26 @@ class HomeFragment : Fragment() {
     private var param2: String? = null
     private lateinit var binding: FragmentHomeBinding
 
-    private var layoutManager: RecyclerView.LayoutManager? = null
-    private var adapter: RecyclerView.Adapter<InformationAdapter.ViewHolder>? = null
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: InformationAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = FragmentHomeBinding.inflate(layoutInflater)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
     }
 
-    override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(itemView, savedInstanceState)
-        binding = FragmentHomeBinding.inflate(layoutInflater)
-        R.id.recycler_view.apply {
-            // set a LinearLayoutManager to handle Android
-            // RecyclerView behavior
-            layoutManager = LinearLayoutManager(activity)
-            // set the custom adapter to the RecyclerView
-            adapter = InformationAdapter()
-        }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        adapter.setOnItemClickListener(object: InformationAdapter.onItemClickListener{
+            override fun onItemClicked(position: Int) {
+                Toast.makeText(activity, "Clicked on $position", Toast.LENGTH_SHORT).show()
+            }
+        })
+
     }
 
     override fun onCreateView(
@@ -55,7 +54,8 @@ class HomeFragment : Fragment() {
     ): View? {
         val recyclerView = RecyclerView(requireContext())
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.adapter = InformationAdapter()
+        adapter = InformationAdapter()
+        recyclerView.adapter = adapter
         return recyclerView
     }
 

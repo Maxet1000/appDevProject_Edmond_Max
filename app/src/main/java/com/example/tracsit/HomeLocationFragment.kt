@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.tracsit.databinding.FragmentHomelocationBinding
-import com.example.tracsit.databinding.FragmentSettingsBinding
 
 class HomeLocationFragment : Fragment(R.layout.fragment_homelocation) {
 
