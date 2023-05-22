@@ -76,4 +76,8 @@ class InformationAdapter : RecyclerView.Adapter<InformationAdapter.ViewHolder>()
         return travelList
     }
 
+    fun addTravelRoute() {
+        travelList.add(TravelInformation("", "", ""))
+    }
+
 }

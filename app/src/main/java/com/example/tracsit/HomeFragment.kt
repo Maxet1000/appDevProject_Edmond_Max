@@ -26,11 +26,10 @@ class HomeFragment : Fragment() {
     private var param2: String? = null
     private lateinit var binding: FragmentHomeBinding
 
-    private lateinit var adapter: InformationAdapter
+    private lateinit var infoAdapter: InformationAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = FragmentHomeBinding.inflate(layoutInflater)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
@@ -39,31 +38,37 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter.setOnItemClickListener(object: InformationAdapter.onItemClickListener{
+        infoAdapter.setOnItemClickListener(object: InformationAdapter.onItemClickListener{
             override fun onItemClicked(position: Int) {
                 Toast.makeText(activity, "Clicked on $position", Toast.LENGTH_SHORT).show()
                 var bundle = Bundle()
-                var travelInfo = adapter.getTravelInformation()[position]
-                bundle.putString("fromLocation", adapter.getTravelInformation()[position].fromLocation)
-                bundle.putString("toLocation", adapter.getTravelInformation()[position].toLocation)
-                bundle.putString("travelTime", adapter.getTravelInformation()[position].travelTime)
+                var travelInfo = infoAdapter.getTravelInformation()[position]
+                bundle.putString("fromLocation", infoAdapter.getTravelInformation()[position].fromLocation)
+                bundle.putString("toLocation", infoAdapter.getTravelInformation()[position].toLocation)
+                bundle.putString("travelTime", infoAdapter.getTravelInformation()[position].travelTime)
                 var f = TravelInformationFragment()
                 f.arguments = bundle
                 goToFragment(f)
             }
         })
-
+        binding.addTravelRout.setOnClickListener{
+            infoAdapter.addTravelRoute()
+            infoAdapter.notifyItemInserted(infoAdapter.itemCount + 1)
+        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val recyclerView = RecyclerView(requireContext())
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        adapter = InformationAdapter()
-        recyclerView.adapter = adapter
-        return recyclerView
+        binding = FragmentHomeBinding.inflate(layoutInflater)
+        infoAdapter = InformationAdapter()
+        val view = binding.root
+        view.findViewById<RecyclerView>(R.id.recycler_view).apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = infoAdapter
+        }
+        return view
     }
 
     private fun goToFragment(fragment : Fragment){
