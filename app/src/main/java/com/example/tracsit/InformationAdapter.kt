@@ -72,5 +72,8 @@ class InformationAdapter : RecyclerView.Adapter<InformationAdapter.ViewHolder>()
         return travelList.size
     }
 
+    fun getTravelInformation(): ArrayList<TravelInformation>{
+        return travelList
+    }
 
 }

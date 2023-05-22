@@ -26,7 +26,6 @@ class HomeFragment : Fragment() {
     private var param2: String? = null
     private lateinit var binding: FragmentHomeBinding
 
-    private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: InformationAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,6 +42,14 @@ class HomeFragment : Fragment() {
         adapter.setOnItemClickListener(object: InformationAdapter.onItemClickListener{
             override fun onItemClicked(position: Int) {
                 Toast.makeText(activity, "Clicked on $position", Toast.LENGTH_SHORT).show()
+                var bundle = Bundle()
+                var travelInfo = adapter.getTravelInformation()[position]
+                bundle.putString("fromLocation", adapter.getTravelInformation()[position].fromLocation)
+                bundle.putString("toLocation", adapter.getTravelInformation()[position].toLocation)
+                bundle.putString("travelTime", adapter.getTravelInformation()[position].travelTime)
+                var f = TravelInformationFragment()
+                f.arguments = bundle
+                goToFragment(f)
             }
         })
 
@@ -57,6 +64,14 @@ class HomeFragment : Fragment() {
         adapter = InformationAdapter()
         recyclerView.adapter = adapter
         return recyclerView
+    }
+
+    private fun goToFragment(fragment : Fragment){
+        parentFragmentManager.beginTransaction().apply{
+            replace(R.id.fragment_container_layout, fragment)
+            addToBackStack("Fragment_${fragment.id}")
+            commit()
+        }
     }
 
     companion object {
