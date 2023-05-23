@@ -5,11 +5,44 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <Button
+        android:id="@+id/getCurrentLocationWork"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Current Location"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerWorkNotification" />
+
+    <EditText
+        android:id="@+id/editBuildingNumberWork"
+        android:layout_width="64dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="32dp"
+        android:ems="10"
+        android:hint="1"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/streetNameAndNumberWork" />
+
+    <EditText
+        android:id="@+id/editPostalCodeWork"
+        android:layout_width="64dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="32dp"
+        android:ems="10"
+        android:hint="75007"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/CityNameWork" />
+
     <TextView
         android:id="@+id/ConfigureWorkLocationHead"
         android:layout_width="350dp"
         android:layout_height="44dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="16dp"
         android:text="Configure Work Location"
         android:textAlignment="center"
         android:textSize="30sp"
@@ -29,10 +62,11 @@
         app:layout_constraintTop_toBottomOf="@+id/ConfigureWorkLocationHead" />
 
     <EditText
-        android:id="@+id/EditCountryNameWork"
+        android:id="@+id/editCountryNameWork"
         android:layout_width="340dp"
         android:layout_height="0dp"
         android:ems="10"
+        android:hint="France"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.563"
@@ -44,18 +78,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="City"
+        android:text="City and Postal Code"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EditCountryNameWork" />
+        app:layout_constraintTop_toBottomOf="@+id/editCountryNameWork" />
 
     <EditText
-        android:id="@+id/EditCityNameWork"
-        android:layout_width="340dp"
+        android:id="@+id/editCityNameWork"
+        android:layout_width="269dp"
         android:layout_height="0dp"
+        android:layout_marginStart="32dp"
         android:ems="10"
+        android:hint="Paris"
         android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/editPostalCodeWork"
+        app:layout_constraintHorizontal_bias="0.571"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/CityNameWork" />
 
@@ -67,15 +104,18 @@
         android:text="Street Name and Number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EditCityNameWork" />
+        app:layout_constraintTop_toBottomOf="@+id/editCityNameWork" />
 
     <EditText
-        android:id="@+id/editStreetNameAndNumberWork"
-        android:layout_width="340dp"
+        android:id="@+id/editStreetNameWork"
+        android:layout_width="269dp"
         android:layout_height="0dp"
+        android:layout_marginStart="32dp"
         android:ems="10"
+        android:hint="Avenue Anatole"
         android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/editBuildingNumberWork"
+        app:layout_constraintHorizontal_bias="0.571"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/streetNameAndNumberWork" />
 
@@ -87,10 +127,10 @@
         android:text="Notify"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editStreetNameAndNumberWork" />
+        app:layout_constraintTop_toBottomOf="@+id/editStreetNameWork" />
 
     <Spinner
-        android:id="@+id/SpinnerWorkNotification"
+        android:id="@+id/spinnerWorkNotification"
         android:layout_width="340dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
@@ -102,7 +142,7 @@
         android:id="@+id/ConfirmWorkLocationButton"
         android:layout_width="81dp"
         android:layout_height="41dp"
-        android:layout_marginBottom="36dp"
+        android:layout_marginBottom="8dp"
         android:text="Done"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

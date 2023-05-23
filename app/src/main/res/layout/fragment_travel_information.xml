@@ -6,16 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/confirmHomeLocationButton"
-        android:layout_width="81dp"
-        android:layout_height="41dp"
-        android:layout_marginBottom="328dp"
-        android:text="Testbutton"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <TextView
         android:id="@+id/fromLocationInfo"
         android:layout_width="wrap_content"

@@ -18,7 +18,7 @@
             android:id="@+id/ConfigureHomeLocationHead"
             android:layout_width="350dp"
             android:layout_height="44dp"
-            android:layout_marginTop="36dp"
+            android:layout_marginTop="16dp"
             android:text="Configure Home Location"
             android:textAlignment="center"
             android:textSize="30sp"
@@ -38,32 +38,35 @@
             app:layout_constraintTop_toBottomOf="@+id/ConfigureHomeLocationHead" />
 
         <EditText
-            android:id="@+id/EditCountryNameHome"
+            android:id="@+id/editCountryNameHome"
             android:layout_width="340dp"
             android:layout_height="0dp"
             android:ems="10"
             android:inputType="textPersonName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/CountryNameHome" />
+            app:layout_constraintTop_toBottomOf="@+id/CountryNameHome"
+            android:hint="Belgium"/>
 
         <TextView
             android:id="@+id/CityNameHome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="City"
+            android:text="City and Postal Code"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/EditCountryNameHome" />
+            app:layout_constraintTop_toBottomOf="@+id/editCountryNameHome" />
 
         <EditText
-            android:id="@+id/EditCityNameHome"
-            android:layout_width="340dp"
+            android:id="@+id/editCityNameHome"
+            android:layout_width="269dp"
             android:layout_height="0dp"
+            android:layout_marginStart="32dp"
             android:ems="10"
+            android:hint="Brussels"
             android:inputType="textPersonName"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/editPostalCodeHome"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/CityNameHome" />
 
@@ -72,18 +75,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="Street Name and Number"
+            android:text="Street Name and Building Number"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/EditCityNameHome" />
+            app:layout_constraintTop_toBottomOf="@+id/editCityNameHome" />
 
         <EditText
-            android:id="@+id/EditStreetNameAndNumberHome"
-            android:layout_width="340dp"
+            android:id="@+id/editStreetNameHome"
+            android:layout_width="269dp"
             android:layout_height="0dp"
+            android:layout_marginStart="32dp"
             android:ems="10"
+            android:hint="Atomiumplein"
             android:inputType="textPersonName"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/editBuildingNumberHome"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/StreetNameAndNumberHome" />
 
@@ -95,10 +100,10 @@
             android:text="Notify"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/EditStreetNameAndNumberHome" />
+            app:layout_constraintTop_toBottomOf="@+id/editStreetNameHome" />
 
         <Spinner
-            android:id="@+id/SpinnerHomeNotification"
+            android:id="@+id/spinnerHomeNotification"
             android:layout_width="340dp"
             android:layout_height="0dp"
             android:layout_marginTop="8dp"
@@ -106,13 +111,45 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/HomeNotification" />
 
+        <Button
+            android:id="@+id/getCurrentLocationHome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Current Location"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spinnerHomeNotification" />
+
+        <EditText
+            android:id="@+id/editBuildingNumberHome"
+            android:layout_width="64dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="32dp"
+            android:ems="10"
+            android:hint="1"
+            android:inputType="text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/StreetNameAndNumberHome" />
+
+        <EditText
+            android:id="@+id/editPostalCodeHome"
+            android:layout_width="64dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="32dp"
+            android:ems="10"
+            android:hint="1000"
+            android:inputType="text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/CityNameHome" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
         android:id="@+id/confirmHomeLocationButton"
         android:layout_width="81dp"
         android:layout_height="41dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
         android:text="Done"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

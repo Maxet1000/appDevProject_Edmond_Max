@@ -10,8 +10,10 @@ import com.example.tracsit.databinding.ActivityMainBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
-import android.os.Build
-import androidx.annotation.RequiresApi
+import android.Manifest
+import android.content.pm.PackageManager
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 
 class MainActivity : AppCompatActivity() {
 
@@ -37,6 +39,19 @@ class MainActivity : AppCompatActivity() {
                 else -> {}
             }
             true
+        }
+
+        if (ContextCompat.checkSelfPermission(this@MainActivity,
+                Manifest.permission.ACCESS_FINE_LOCATION) !==
+            PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this@MainActivity,
+                    Manifest.permission.ACCESS_FINE_LOCATION)) {
+                ActivityCompat.requestPermissions(this@MainActivity,
+                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1)
+            } else {
+                ActivityCompat.requestPermissions(this@MainActivity,
+                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1)
+            }
         }
 
     }
