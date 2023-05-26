@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.example.tracsit.databinding.FragmentHomelocationBinding
@@ -16,14 +17,15 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.CancellationTokenSource
+import java.lang.Exception
 import java.util.Locale
 
 class WorkLocationFragment : Fragment(R.layout.fragment_worklocation) {
 
     private lateinit var binding: FragmentWorklocationBinding
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
-    val priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
-    val cancellationTokenSource = CancellationTokenSource()
+    private val priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
+    private val cancellationTokenSource = CancellationTokenSource()
     private lateinit var geocoder: Geocoder
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,15 +56,16 @@ class WorkLocationFragment : Fragment(R.layout.fragment_worklocation) {
         }
         fusedLocationProviderClient.getCurrentLocation(priority, cancellationTokenSource.token)
             .addOnSuccessListener { location ->
-                Log.d("Location", "location is found: $location")
-                val address = geocoder.getFromLocation(location.latitude, location.longitude, 1)
-                binding.editStreetNameWork.setText(address?.get(0)?.thoroughfare)
-                binding.editPostalCodeWork.setText(address?.get(0)?.postalCode)
-                binding.editCityNameWork.setText(address?.get(0)?.locality)
-                binding.editCountryNameWork.setText(address?.get(0)?.countryName)
-                binding.editBuildingNumberWork.setText(address?.get(0)?.featureName)
-            }
-            .addOnFailureListener { exception ->
+                    Log.d("Location", "location is found: $location")
+                    val address = geocoder.getFromLocation(location.latitude, location.longitude, 1)
+                    binding.editStreetNameWork.setText(address?.get(0)?.thoroughfare)
+                    binding.editPostalCodeWork.setText(address?.get(0)?.postalCode)
+                    binding.editCityNameWork.setText(address?.get(0)?.locality)
+                    binding.editCountryNameWork.setText(address?.get(0)?.countryName)
+                    binding.editBuildingNumberWork.setText(address?.get(0)?.featureName)
+                }
+
+            .addOnFailureListener { exception -> //mag opzich weg
                 Log.d("Location", "Oops location failed with exception: $exception")
             }
     }

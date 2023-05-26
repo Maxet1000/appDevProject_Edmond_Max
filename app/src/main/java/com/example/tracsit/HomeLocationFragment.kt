@@ -35,32 +35,6 @@ class HomeLocationFragment : Fragment(R.layout.fragment_homelocation) {
         geocoder = Geocoder(requireContext(), Locale.getDefault())
         }
 
-    private fun getLocation() {
-        val task = fusedLocationProviderClient.lastLocation
-
-        if(ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION)
-            != PackageManager.PERMISSION_GRANTED && ActivityCompat
-                         .checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED){
-                ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 101)
-
-            return
-        }
-
-        fusedLocationProviderClient.getCurrentLocation(priority, cancellationTokenSource.token)
-        .addOnSuccessListener { location ->
-            Log.d("Location", "location is found: $location")
-            val address = geocoder.getFromLocation(location.latitude, location.longitude, 1)
-            binding.editStreetNameHome.setText(address?.get(0)?.thoroughfare)
-            binding.editPostalCodeHome.setText(address?.get(0)?.postalCode)
-            binding.editCityNameHome.setText(address?.get(0)?.locality)
-            binding.editCountryNameHome.setText(address?.get(0)?.countryName)
-            binding.editBuildingNumberHome.setText(address?.get(0)?.featureName)
-        }
-        .addOnFailureListener { exception ->
-            Log.d("Location", "Oops location failed with exception: $exception")
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -74,5 +48,43 @@ class HomeLocationFragment : Fragment(R.layout.fragment_homelocation) {
         binding.getCurrentLocationHome.setOnClickListener{
             getLocation()
         }
+        binding.confirmHomeLocationButton.setOnClickListener {
+            saveLocation()
+        }
+    }
+
+    private fun getLocation() {
+        val task = fusedLocationProviderClient.lastLocation
+
+        if(ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+            != PackageManager.PERMISSION_GRANTED && ActivityCompat
+                .checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 101)
+
+            return
+        }
+
+        fusedLocationProviderClient.getCurrentLocation(priority, cancellationTokenSource.token)
+            .addOnSuccessListener { location ->
+                Log.d("Location", "location is found: $location")
+                try { //doet niet veel aan het crashen van de geocoder "java.lang.RuntimeException: java.lang.reflect.InvocationTargetException"
+                    // werkt wel wanneer gps uit staat
+                    val address = geocoder.getFromLocation(location.latitude, location.longitude, 1)
+                    binding.editStreetNameHome.setText(address?.get(0)?.thoroughfare)
+                    binding.editPostalCodeHome.setText(address?.get(0)?.postalCode)
+                    binding.editCityNameHome.setText(address?.get(0)?.locality)
+                    binding.editCountryNameHome.setText(address?.get(0)?.countryName)
+                    binding.editBuildingNumberHome.setText(address?.get(0)?.featureName)
+                } catch(e: Exception){
+                    Toast.makeText(context, "No location found", Toast.LENGTH_SHORT).show()
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.d("Location", "Oops location failed with exception: $exception")
+            }
+    }
+
+    private fun saveLocation() {
+        TODO("Not yet implemented")
     }
 }

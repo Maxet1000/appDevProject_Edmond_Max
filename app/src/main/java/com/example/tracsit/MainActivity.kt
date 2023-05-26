@@ -12,14 +12,19 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import android.Manifest
 import android.content.pm.PackageManager
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityMainBinding
     private lateinit var menuBarToggle: ActionBarDrawerToggle
     private lateinit var auth: FirebaseAuth
+    private lateinit var currentUser: FirebaseUser
     private companion object var s: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,6 +34,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         goToFragment(HomeFragment())
         setupMenuDrawer()
+        auth = Firebase.auth
 
         binding.bottomNavigationView.setOnItemSelectedListener {
             when(it.itemId) {
@@ -70,8 +76,17 @@ class MainActivity : AppCompatActivity() {
         binding.navView.setNavigationItemSelectedListener {
             when (it.itemId) {
                     R.id.logoutButton -> goToLoginScreen()
+                    R.id.getUser -> getCurrentGoogleAccount()
             }
             true
+        }
+    }
+
+    private fun getCurrentGoogleAccount() {
+        if(auth.currentUser != null) {
+            Toast.makeText(this, currentUser.email.toString(), Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, "No user is signed in", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -104,5 +119,14 @@ class MainActivity : AppCompatActivity() {
             return true
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if(auth.currentUser == null){
+
+        } else {
+            currentUser = auth.currentUser!!
+        }
     }
 }

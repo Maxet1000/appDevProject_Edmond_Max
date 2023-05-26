@@ -9,11 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 
 class InformationAdapter : RecyclerView.Adapter<InformationAdapter.ViewHolder>() {
     private lateinit var mListener: onItemClickListener
-    private var p1 = TravelInformation("Brussels","Paris","00:20")
-    private var p2 = TravelInformation( "Paris","Rome","00:10")
-    private var p3 = TravelInformation("Rome", "Brussels","00:30")
-    private var p4 = TravelInformation("Amsterdam","Frankfurt","00:40")
-    private var travelList: ArrayList<TravelInformation> = arrayListOf(p1,p2,p3,p4)
+
+    private var travelList: ArrayList<TravelInformation> = ArrayList()
 
     interface onItemClickListener{
         fun onItemClicked(position: Int)
@@ -41,9 +38,9 @@ class InformationAdapter : RecyclerView.Adapter<InformationAdapter.ViewHolder>()
                 val context = itemView.context
                 val intent = Intent(context, MainActivity::class.java).apply {
                     putExtra("NUMBER", pos)
-                    putExtra("CODE", fromLocation.text)
-                    putExtra("CATEGORY", toLocation.text)
-                    putExtra("CONTENT", travelTime.text)
+                    putExtra("FROM", fromLocation.text)
+                    putExtra("TO", toLocation.text)
+                    putExtra("TT", travelTime.text)
                 }
                 context.startActivity(intent)
             }
@@ -58,8 +55,8 @@ class InformationAdapter : RecyclerView.Adapter<InformationAdapter.ViewHolder>()
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, i: Int) {
-        viewHolder.fromLocation.text = "From: " + travelList[i].fromLocation
-        viewHolder.toLocation.text = "To: " + travelList[i].toLocation
+        viewHolder.fromLocation.text = "From: " + travelList[i].fromLocation?.getAddressLine(0)
+        viewHolder.toLocation.text = "To: " + travelList[i].toLocation?.getAddressLine(0)
         viewHolder.travelTime.text = "TravelTime: " + travelList[i].travelTime
         viewHolder.itemView.setOnClickListener {
             if (mListener != null) {
@@ -77,7 +74,7 @@ class InformationAdapter : RecyclerView.Adapter<InformationAdapter.ViewHolder>()
     }
 
     fun addTravelRoute() {
-        travelList.add(TravelInformation("", "", ""))
+        travelList.add(TravelInformation(null, null, null ))
     }
 
 }
