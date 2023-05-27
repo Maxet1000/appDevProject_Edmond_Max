@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tracsit.databinding.FragmentHomeBinding
@@ -29,31 +30,31 @@ class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
 
-    private lateinit var infoAdapter: InformationAdapter
-
     private lateinit var geocoder: Geocoder
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    private var infoAdapter: InformationAdapter = InformationAdapter()
 
+    lateinit var model: SharedViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         geocoder = Geocoder(requireContext(), Locale.getDefault())
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+        var TestAddress = geocoder.getFromLocation(50.84037665757134, 4.362440673192904, 1)
+        infoAdapter.getTravelInformation().add(TravelInformation(TestAddress?.get(0),TestAddress?.get(0), "00:10"))
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var TestAddress = geocoder.getFromLocation(50.84037665757134, 4.362440673192904, 1)
-        infoAdapter.getTravelInformation().add(TravelInformation(TestAddress?.get(0),TestAddress?.get(0), "00:10"))
+        model = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         infoAdapter.setOnItemClickListener(object: InformationAdapter.onItemClickListener{
             override fun onItemClicked(position: Int) {
                 Toast.makeText(activity, "Clicked on $position", Toast.LENGTH_SHORT).show()
                 var bundle = Bundle()
-                //bundle.putString("fromLocation", infoAdapter.getTravelInformation()[position].fromLocation)
-                //bundle.putString("toLocation", infoAdapter.getTravelInformation()[position].toLocation)
-                //bundle.putString("travelTime", infoAdapter.getTravelInformation()[position].travelTime)
+                model.sendMessage(infoAdapter.getTravelInformation()[position])
                 bundle.putParcelable("TravelInfo", infoAdapter.getTravelInformation()[position])
                 var f = TravelInformationFragment()
                 f.arguments = bundle
@@ -71,7 +72,6 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentHomeBinding.inflate(layoutInflater)
-        infoAdapter = InformationAdapter()
         val view = binding.root
         view.findViewById<RecyclerView>(R.id.recycler_view).apply {
             layoutManager = LinearLayoutManager(requireContext())

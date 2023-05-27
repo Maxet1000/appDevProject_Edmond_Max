@@ -22,6 +22,8 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var binding: FragmentSettingsBinding
+    private var homeLocationFragment = HomeLocationFragment()
+    private var workLocationFragment = WorkLocationFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,10 +39,10 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     ): View? {
         binding = FragmentSettingsBinding.inflate(layoutInflater)
         binding.SetHomeLocation.setOnClickListener{
-            goToFragment(HomeLocationFragment())
+            goToFragment(homeLocationFragment)
         }
         binding.SetWorkLocation.setOnClickListener{
-            goToFragment(WorkLocationFragment())
+            goToFragment(workLocationFragment)
         }
         // Inflate the layout for this fragment
         return binding.root

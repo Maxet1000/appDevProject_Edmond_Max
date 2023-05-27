@@ -11,7 +11,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import android.Manifest
+import android.content.Context
 import android.content.pm.PackageManager
+import android.util.AttributeSet
+import android.view.View
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -25,23 +28,27 @@ class MainActivity : AppCompatActivity() {
     private lateinit var menuBarToggle: ActionBarDrawerToggle
     private lateinit var auth: FirebaseAuth
     private lateinit var currentUser: FirebaseUser
-    private companion object var s: String? = null
+
+    var homeFragment = HomeFragment()
+    var notificationsFragment = NotificationsFragment()
+    var settingsFragment = SettingsFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         auth = FirebaseAuth.getInstance()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        goToFragment(HomeFragment())
         setupMenuDrawer()
         auth = Firebase.auth
 
+
+        goToFragment(homeFragment)
+
         binding.bottomNavigationView.setOnItemSelectedListener {
             when(it.itemId) {
-                R.id.home -> goToFragment(HomeFragment())
-                R.id.notifications -> goToFragment(NotificationsFragment())
-                R.id.settings -> goToFragment(SettingsFragment())
-
+                R.id.home -> goToFragment(homeFragment)
+                R.id.notifications -> goToFragment(notificationsFragment)
+                R.id.settings -> goToFragment(settingsFragment)
                 else -> {}
             }
             true

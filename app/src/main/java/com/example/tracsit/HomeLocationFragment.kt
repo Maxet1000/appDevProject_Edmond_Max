@@ -1,10 +1,9 @@
 package com.example.tracsit
 
 import android.Manifest
-import android.app.Activity
 import android.content.pm.PackageManager
+import android.location.Address
 import android.location.Geocoder
-import android.location.LocationManager
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,14 +11,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.example.tracsit.databinding.FragmentHomelocationBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.CancellationTokenSource
 import java.util.Locale
+
 
 class HomeLocationFragment : Fragment(R.layout.fragment_homelocation) {
 
@@ -28,6 +29,7 @@ class HomeLocationFragment : Fragment(R.layout.fragment_homelocation) {
     val priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
     val cancellationTokenSource = CancellationTokenSource()
     private lateinit var geocoder: Geocoder
+    private var travelInfo: TravelInformation? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +53,15 @@ class HomeLocationFragment : Fragment(R.layout.fragment_homelocation) {
         binding.confirmHomeLocationButton.setOnClickListener {
             saveLocation()
         }
+        val model = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
+        travelInfo = model.message.value
+        model.message.observe(viewLifecycleOwner, Observer {
+            binding.editStreetNameHome.setText(it.fromLocation?.thoroughfare)
+            binding.editPostalCodeHome.setText(it.fromLocation?.postalCode)
+            binding.editCityNameHome.setText(it.fromLocation?.locality)
+            binding.editCountryNameHome.setText(it.fromLocation?.countryName)
+            binding.editBuildingNumberHome.setText(it.fromLocation?.featureName)
+        })
     }
 
     private fun getLocation() {
@@ -85,6 +96,23 @@ class HomeLocationFragment : Fragment(R.layout.fragment_homelocation) {
     }
 
     private fun saveLocation() {
-        TODO("Not yet implemented")
+        if(binding.editCityNameHome.text.toString().trim().isNotEmpty()
+        && binding.editCountryNameHome.text.toString().trim().isNotEmpty()
+        ) {
+            var guessLoaction = "" + binding.editStreetNameHome.text + " " + binding.editPostalCodeHome.text + " " + binding.editCityNameHome.text + " " + binding.editCountryNameHome.text + binding.editBuildingNumberHome.text
+            try {
+                var guessedLocation = geocoder.getFromLocationName(guessLoaction, 5)
+                if (guessedLocation == null) {
+                    Toast.makeText(requireContext(), "No location found", Toast.LENGTH_SHORT)
+                } else {
+                    var location: Address = guessedLocation[0]
+                    travelInfo?.fromLocation = location
+                }
+            } catch (ex: java.lang.Exception) {
+                ex.printStackTrace()
+            }
+        } else {
+            Toast.makeText(requireContext(), "Invalid Input, at least City and Country are required", Toast.LENGTH_SHORT).show()
+        }
     }
 }
