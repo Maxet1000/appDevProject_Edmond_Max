@@ -44,12 +44,12 @@ class HomeFragment : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
         var TestAddress = geocoder.getFromLocation(50.84037665757134, 4.362440673192904, 1)
-        infoAdapter.getTravelInformation().add(TravelInformation(TestAddress?.get(0),TestAddress?.get(0), "00:10"))
+        infoAdapter.getTravelInformation().add(TravelInformation(TestAddress?.get(0),TestAddress?.get(0), "00:10", Array(7) { false }))
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        model = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+        model = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
         infoAdapter.setOnItemClickListener(object: InformationAdapter.onItemClickListener{
             override fun onItemClicked(position: Int) {
                 Toast.makeText(activity, "Clicked on $position", Toast.LENGTH_SHORT).show()

@@ -7,7 +7,9 @@ import android.os.Parcelable
 class TravelInformation(
     var fromLocation: Address?,
     var toLocation: Address?,
-    var travelTime: String?) : Parcelable {
+    var travelTime: String?,
+    var activeDays: Array<Boolean>
+) : Parcelable {
     //parcelable can be used later to pass an object from fragments instead of parts of the fragment
     companion object {
         @JvmField
@@ -20,15 +22,17 @@ class TravelInformation(
     private constructor(parcel: Parcel) : this(
         fromLocation = parcel.readParcelable(Address::class.java.classLoader),
         toLocation = parcel.readParcelable(Address::class.java.classLoader),
-        travelTime = parcel.readString()
+        travelTime = parcel.readString(),
+        activeDays = parcel.readArray(Boolean::class.java.classLoader) as Array<Boolean>
     )
 
-    constructor(travelInformation: TravelInformation) : this(travelInformation.fromLocation , travelInformation.toLocation, travelInformation.travelTime)
+    constructor(travelInformation: TravelInformation) : this(travelInformation.fromLocation , travelInformation.toLocation, travelInformation.travelTime, travelInformation.activeDays)
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeParcelable(fromLocation, flags)
         parcel.writeParcelable(toLocation, flags)
         parcel.writeString(travelTime)
+        parcel.writeArray(activeDays)
     }
 
     override fun describeContents() = 0

@@ -31,7 +31,6 @@ class MainActivity : AppCompatActivity() {
 
     var homeFragment = HomeFragment()
     var notificationsFragment = NotificationsFragment()
-    var settingsFragment = SettingsFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +47,7 @@ class MainActivity : AppCompatActivity() {
             when(it.itemId) {
                 R.id.home -> goToFragment(homeFragment)
                 R.id.notifications -> goToFragment(notificationsFragment)
-                R.id.settings -> goToFragment(settingsFragment)
+                R.id.settings -> goToFragment(SettingsFragment())
                 else -> {}
             }
             true

@@ -58,6 +58,9 @@ class InformationAdapter : RecyclerView.Adapter<InformationAdapter.ViewHolder>()
         viewHolder.fromLocation.text = "From: " + travelList[i].fromLocation?.getAddressLine(0)
         viewHolder.toLocation.text = "To: " + travelList[i].toLocation?.getAddressLine(0)
         viewHolder.travelTime.text = "TravelTime: " + travelList[i].travelTime
+        if( travelList[i].fromLocation == null){ viewHolder.fromLocation.text = "From: "}
+        if( travelList[i].toLocation == null){ viewHolder.toLocation.text = "To: "}
+        if( travelList[i].travelTime == null){ viewHolder.travelTime.text = "TravelTime: "}
         viewHolder.itemView.setOnClickListener {
             if (mListener != null) {
                 mListener!!.onItemClicked(i)
@@ -74,7 +77,7 @@ class InformationAdapter : RecyclerView.Adapter<InformationAdapter.ViewHolder>()
     }
 
     fun addTravelRoute() {
-        travelList.add(TravelInformation(null, null, null ))
+        travelList.add(TravelInformation(null, null, null, Array(7) { false }))
     }
 
 }

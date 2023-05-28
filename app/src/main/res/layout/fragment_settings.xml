@@ -19,7 +19,7 @@
             android:layout_marginTop="16dp"
             android:text="Work location:"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/SetHomeLocation" />
+            app:layout_constraintTop_toBottomOf="@+id/setHomeLocation" />
 
         <TextView
             android:id="@+id/SettingsHead"
@@ -51,10 +51,10 @@
             android:layout_marginTop="16dp"
             android:text="Active days:"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/SetWorkLocation" />
+            app:layout_constraintTop_toBottomOf="@+id/setWorkLocation" />
 
         <CheckBox
-            android:id="@+id/ActiveAtMonday"
+            android:id="@+id/activeAtMonday"
             android:layout_width="106dp"
             android:layout_height="32dp"
             android:layout_marginStart="36dp"
@@ -64,67 +64,67 @@
             app:layout_constraintTop_toBottomOf="@+id/ActiveDaysTitle" />
 
         <CheckBox
-            android:id="@+id/ActiveAtTuesday"
+            android:id="@+id/activeAtTuesday"
             android:layout_width="106dp"
             android:layout_height="32dp"
             android:layout_marginStart="36dp"
             android:layout_marginTop="8dp"
             android:text="Tuesday"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ActiveAtMonday" />
+            app:layout_constraintTop_toBottomOf="@+id/activeAtMonday" />
 
         <CheckBox
-            android:id="@+id/ActiveAtWednesday"
+            android:id="@+id/activeAtWednesday"
             android:layout_width="114dp"
             android:layout_height="32dp"
             android:layout_marginStart="36dp"
             android:layout_marginTop="8dp"
             android:text="Wednesday"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ActiveAtTuesday" />
+            app:layout_constraintTop_toBottomOf="@+id/activeAtTuesday" />
 
         <CheckBox
-            android:id="@+id/ActiveAtThursday"
+            android:id="@+id/activeAtThursday"
             android:layout_width="106dp"
             android:layout_height="32dp"
             android:layout_marginStart="36dp"
             android:layout_marginTop="8dp"
             android:text="Thursday"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ActiveAtWednesday" />
+            app:layout_constraintTop_toBottomOf="@+id/activeAtWednesday" />
 
         <CheckBox
-            android:id="@+id/ActiveAtFriday"
+            android:id="@+id/activeAtFriday"
             android:layout_width="106dp"
             android:layout_height="32dp"
             android:layout_marginStart="36dp"
             android:layout_marginTop="8dp"
             android:text="Friday"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ActiveAtThursday" />
+            app:layout_constraintTop_toBottomOf="@+id/activeAtThursday" />
 
         <CheckBox
-            android:id="@+id/ActiveAtSaturday"
+            android:id="@+id/activeAtSaturday"
             android:layout_width="106dp"
             android:layout_height="32dp"
             android:layout_marginStart="36dp"
             android:layout_marginTop="8dp"
             android:text="Saturday"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ActiveAtFriday" />
+            app:layout_constraintTop_toBottomOf="@+id/activeAtFriday" />
 
         <CheckBox
-            android:id="@+id/ActiveAtSunday"
+            android:id="@+id/activeAtSunday"
             android:layout_width="106dp"
             android:layout_height="32dp"
             android:layout_marginStart="36dp"
             android:layout_marginTop="8dp"
             android:text="Sunday"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ActiveAtSaturday" />
+            app:layout_constraintTop_toBottomOf="@+id/activeAtSaturday" />
 
         <Button
-            android:id="@+id/SetHomeLocation"
+            android:id="@+id/setHomeLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="36dp"
@@ -133,7 +133,7 @@
             app:layout_constraintTop_toBottomOf="@+id/HomeLocationTitle" />
 
         <Button
-            android:id="@+id/SetWorkLocation"
+            android:id="@+id/setWorkLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="36dp"

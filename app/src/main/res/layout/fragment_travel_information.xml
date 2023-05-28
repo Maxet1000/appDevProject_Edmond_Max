@@ -7,20 +7,110 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/configureWorkLocationHead"
+        android:layout_width="350dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="16dp"
+        android:text="Travel Information"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <CheckBox
+        android:id="@+id/activeAtWednesdayInformation"
+        android:clickable="false"
+        android:layout_width="106dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:text="Wednesday"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activeAtTuesdayInformation" />
+
+    <CheckBox
+        android:id="@+id/activeAtThursdayInformation"
+        android:clickable="false"
+        android:layout_width="106dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:text="Thursday"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activeAtWednesdayInformation" />
+
+    <CheckBox
+        android:id="@+id/activeAtFridayInformation"
+        android:clickable="false"
+        android:layout_width="106dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:text="Friday"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activeAtThursdayInformation" />
+
+    <CheckBox
+        android:id="@+id/activeAtSaturdayInformation"
+        android:clickable="false"
+        android:layout_width="106dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:text="Saturday"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activeAtFridayInformation" />
+
+    <CheckBox
+        android:id="@+id/activeAtSundayInformation"
+        android:clickable="false"
+        android:layout_width="106dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:text="Sunday"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activeAtSaturdayInformation" />
+
+    <CheckBox
+        android:id="@+id/activeAtMondayInformation"
+        android:layout_width="106dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:clickable="false"
+        android:text="Monday"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/travelTimeInfo" />
+
+    <CheckBox
+        android:id="@+id/activeAtTuesdayInformation"
+        android:clickable="false"
+        android:layout_width="106dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:text="Tuesday"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activeAtMondayInformation" />
+
+    <TextView
         android:id="@+id/fromLocationInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:text="From:"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/configureWorkLocationHead" />
 
     <TextView
         android:id="@+id/toLocationInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:text="To:"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,7 +120,7 @@
         android:id="@+id/travelTimeInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:text="TT:"
         app:layout_constraintStart_toStartOf="parent"
