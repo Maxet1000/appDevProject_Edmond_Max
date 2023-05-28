@@ -22,9 +22,6 @@
             android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".WelcomeActivity"
-            android:exported="false" />
-        <activity
             android:name=".LogInActivity"
             android:exported="true">
             <intent-filter>

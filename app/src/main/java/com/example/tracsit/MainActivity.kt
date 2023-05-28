@@ -11,10 +11,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import android.Manifest
-import android.content.Context
 import android.content.pm.PackageManager
-import android.util.AttributeSet
-import android.view.View
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -25,21 +22,25 @@ import com.google.firebase.ktx.Firebase
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityMainBinding
+
     private lateinit var menuBarToggle: ActionBarDrawerToggle
+
     private lateinit var auth: FirebaseAuth
     private lateinit var currentUser: FirebaseUser
 
-    var homeFragment = HomeFragment()
-    var notificationsFragment = NotificationsFragment()
+    private var homeFragment = HomeFragment()
+    private var notificationsFragment = NotificationsFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        auth = FirebaseAuth.getInstance()
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setupMenuDrawer()
+
+        auth = FirebaseAuth.getInstance()
         auth = Firebase.auth
 
+        setupMenuDrawer()
 
         goToFragment(homeFragment)
 
@@ -68,31 +69,27 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    override fun onStart() {
+        super.onStart()
+        if(auth.currentUser == null){
+            Toast.makeText(applicationContext, "No use logged in", Toast.LENGTH_SHORT).show()
+        } else {
+            currentUser = auth.currentUser!!
+        }
+    }
+
     private fun setupMenuDrawer() {
         menuBarToggle = ActionBarDrawerToggle(this, binding.drawerLayout, R.string.menu_open, R.string.menu_close)
         binding.drawerLayout.addDrawerListener(menuBarToggle)
-        // it's now ready to be used
         menuBarToggle.syncState()
-
-        // when the menu drawer opens, the toggle button moves to a "back" button and it will close again.
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        // handle menu drawer item clicks.
-        // since these are all events that influence the fragment list, delegate their actions!
         binding.navView.setNavigationItemSelectedListener {
             when (it.itemId) {
                     R.id.logoutButton -> goToLoginScreen()
                     R.id.getUser -> getCurrentGoogleAccount()
             }
             true
-        }
-    }
-
-    private fun getCurrentGoogleAccount() {
-        if(auth.currentUser != null) {
-            Toast.makeText(this, currentUser.email.toString(), Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(this, "No user is signed in", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -110,13 +107,21 @@ class MainActivity : AppCompatActivity() {
             .requestEmail()
             .build()
 
-        var googleSignInClient = GoogleSignIn.getClient(this, gso)
+        val googleSignInClient = GoogleSignIn.getClient(this, gso)
 
         googleSignInClient.signOut().addOnCompleteListener {
             val intent= Intent(this, LogInActivity::class.java)
-            var auth = FirebaseAuth.getInstance()
+            val auth = FirebaseAuth.getInstance()
             auth.signOut()
-            startActivity(intent);
+            startActivity(intent)
+        }
+    }
+
+    private fun getCurrentGoogleAccount() {
+        if(auth.currentUser != null) {
+            Toast.makeText(this, currentUser.email.toString(), Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, "No user is signed in", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -125,14 +130,5 @@ class MainActivity : AppCompatActivity() {
             return true
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    override fun onStart() {
-        super.onStart()
-        if(auth.currentUser == null){
-
-        } else {
-            currentUser = auth.currentUser!!
-        }
     }
 }

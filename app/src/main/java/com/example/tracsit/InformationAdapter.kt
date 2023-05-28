@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 class InformationAdapter : RecyclerView.Adapter<InformationAdapter.ViewHolder>() {
+
     private lateinit var mListener: onItemClickListener
 
     private var travelList: ArrayList<TravelInformation> = ArrayList()
@@ -34,7 +35,7 @@ class InformationAdapter : RecyclerView.Adapter<InformationAdapter.ViewHolder>()
             travelTime = itemView.findViewById(R.id.travelTime)
 
             itemView.setOnClickListener {
-                var pos: Int = adapterPosition
+                val pos: Int = adapterPosition
                 val context = itemView.context
                 val intent = Intent(context, MainActivity::class.java).apply {
                     putExtra("NUMBER", pos)
@@ -42,7 +43,7 @@ class InformationAdapter : RecyclerView.Adapter<InformationAdapter.ViewHolder>()
                     putExtra("TO", toLocation.text)
                     putExtra("TT", travelTime.text)
                 }
-                context.startActivity(intent)
+                context.startActivity(intent) //Wordt momenteel niet gebruikt omdat er alleen één activity is waar het meeste in gebeurd. Maar dit is wel een handige uitbreiding
             }
         }
     }
@@ -62,9 +63,7 @@ class InformationAdapter : RecyclerView.Adapter<InformationAdapter.ViewHolder>()
         if( travelList[i].toLocation == null){ viewHolder.toLocation.text = "To: "}
         if( travelList[i].travelTime == null){ viewHolder.travelTime.text = "TravelTime: "}
         viewHolder.itemView.setOnClickListener {
-            if (mListener != null) {
-                mListener!!.onItemClicked(i)
-            }
+            mListener.onItemClicked(i)
         }
     }
 

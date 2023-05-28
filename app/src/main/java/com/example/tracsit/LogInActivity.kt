@@ -12,7 +12,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.tasks.Task
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 
@@ -20,11 +19,14 @@ import com.google.firebase.auth.GoogleAuthProvider
 class LogInActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
+
     private lateinit var auth: FirebaseAuth
+
     private lateinit var googleSignInClient: GoogleSignInClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -40,16 +42,16 @@ class LogInActivity : AppCompatActivity() {
             signInGoogle()
         }
 
-        binding.buttonGoogleLogIn.setOnClickListener{
+        binding.skipLogin.setOnClickListener{
             val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent);
-        } //TODO: mag weg, makkelijk voor testen
+            startActivity(intent)
+        } //TODO: mag weg, makkelijk voor testen zodat er niet altijd ingelogd moet worden via google
 
     }
 
     override fun onStart(){
         super.onStart()
-        var account = GoogleSignIn.getLastSignedInAccount(this)
+        val account = GoogleSignIn.getLastSignedInAccount(this)
         if(account != null) {
             updateUI(account)
         }
@@ -84,7 +86,7 @@ class LogInActivity : AppCompatActivity() {
         val credential = GoogleAuthProvider.getCredential(account.idToken, null)
         auth.signInWithCredential(credential).addOnCompleteListener{
             if(it.isSuccessful){
-                val intent: Intent = Intent(this, MainActivity::class.java)
+                val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
             } else{
                 Toast.makeText(this, it.exception.toString(), Toast.LENGTH_LONG).show()

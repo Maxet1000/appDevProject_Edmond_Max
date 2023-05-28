@@ -46,7 +46,7 @@
         app:layout_constraintBottom_toTopOf="@+id/passWordLogIn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonGoogleLogIn" />
+        app:layout_constraintTop_toBottomOf="@+id/skipLogin" />
 
     <Button
         android:id="@+id/logInButton"
@@ -61,11 +61,11 @@
         app:layout_constraintTop_toBottomOf="@+id/passWordLogIn" />
 
     <Button
-        android:id="@+id/buttonGoogleLogIn"
+        android:id="@+id/skipLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
-        android:text="Log-in with Google"
+        android:text="Skip Login"
         app:layout_constraintBottom_toTopOf="@+id/editEmailAddressLogIn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -85,6 +85,10 @@
     <com.google.android.gms.common.SignInButton
         android:id="@+id/sign_in_button"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/skipLogin" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

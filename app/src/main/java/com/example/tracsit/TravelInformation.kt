@@ -10,7 +10,7 @@ class TravelInformation(
     var travelTime: String?,
     var activeDays: Array<Boolean>
 ) : Parcelable {
-    //parcelable can be used later to pass an object from fragments instead of parts of the fragment
+
     companion object {
         @JvmField
         val CREATOR = object : Parcelable.Creator<TravelInformation> {
@@ -25,8 +25,6 @@ class TravelInformation(
         travelTime = parcel.readString(),
         activeDays = parcel.readArray(Boolean::class.java.classLoader) as Array<Boolean>
     )
-
-    constructor(travelInformation: TravelInformation) : this(travelInformation.fromLocation , travelInformation.toLocation, travelInformation.travelTime, travelInformation.activeDays)
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeParcelable(fromLocation, flags)

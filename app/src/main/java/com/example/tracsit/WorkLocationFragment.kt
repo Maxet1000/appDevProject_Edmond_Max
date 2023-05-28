@@ -2,7 +2,6 @@ package com.example.tracsit
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.location.Address
 import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
@@ -25,21 +24,53 @@ import kotlin.Exception
 class WorkLocationFragment : Fragment(R.layout.fragment_worklocation) {
 
     private lateinit var binding: FragmentWorklocationBinding
+
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    private lateinit var geocoder: Geocoder
     private val priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
     private val cancellationTokenSource = CancellationTokenSource()
-    private lateinit var geocoder: Geocoder
+
     private var travelInfo: TravelInformation? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity())
         geocoder = Geocoder(requireContext(), Locale.getDefault())
     }
 
-    private fun getLocation() {
-        val task = fusedLocationProviderClient.lastLocation
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = FragmentWorklocationBinding.inflate(layoutInflater)
+        return binding.root
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.getCurrentLocationWork.setOnClickListener{
+            getLocation()
+        }
+
+        binding.ConfirmWorkLocationButton.setOnClickListener {
+            saveLocation()
+            parentFragmentManager.popBackStack()
+        }
+
+        val model = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
+        travelInfo = model.message.value
+        model.message.observe(viewLifecycleOwner, Observer {
+            binding.editStreetNameWork.setText(it.toLocation?.thoroughfare)
+            binding.editPostalCodeWork.setText(it.toLocation?.postalCode)
+            binding.editCityNameWork.setText(it.toLocation?.locality)
+            binding.editCountryNameWork.setText(it.toLocation?.countryName)
+            binding.editBuildingNumberWork.setText(it.toLocation?.featureName)
+        })
+    }
+
+    private fun getLocation() {
         if (ActivityCompat.checkSelfPermission(
                 requireContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION
@@ -58,10 +89,10 @@ class WorkLocationFragment : Fragment(R.layout.fragment_worklocation) {
 
             return
         }
+
         fusedLocationProviderClient.getCurrentLocation(priority, cancellationTokenSource.token)
             .addOnSuccessListener { location ->
-                    Log.d("Location", "location is found: $location")
-                try{
+                try{ //zie commentaar HomeLocationFragment, geld hier ook
                     val address = geocoder.getFromLocation(location.latitude, location.longitude, 1)
                     binding.editStreetNameWork.setText(address?.get(0)?.thoroughfare)
                     binding.editPostalCodeWork.setText(address?.get(0)?.postalCode)
@@ -72,54 +103,29 @@ class WorkLocationFragment : Fragment(R.layout.fragment_worklocation) {
                     Toast.makeText(context, "No location found", Toast.LENGTH_SHORT).show()
                 }
             }
-
             .addOnFailureListener { exception -> //mag opzich weg
                 Log.d("Location", "Oops location failed with exception: $exception")
             }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentWorklocationBinding.inflate(layoutInflater)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        binding.getCurrentLocationWork.setOnClickListener{
-            getLocation()
-        }
-        binding.ConfirmWorkLocationButton.setOnClickListener {
-            saveLocation()
-        }
-        val model = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
-        travelInfo = model.message.value
-        model.message.observe(viewLifecycleOwner, Observer {
-            binding.editStreetNameWork.setText(it.toLocation?.thoroughfare)
-            binding.editPostalCodeWork.setText(it.toLocation?.postalCode)
-            binding.editCityNameWork.setText(it.toLocation?.locality)
-            binding.editCountryNameWork.setText(it.toLocation?.countryName)
-            binding.editBuildingNumberWork.setText(it.toLocation?.featureName)
-        })
-    }
-
     private fun saveLocation() {
-        if(binding.editCityNameWork.text.toString().trim().isNotEmpty()
-            && binding.editCountryNameWork.text.toString().trim().isNotEmpty()
-        ) {
-            var guessLoaction = "" + binding.editStreetNameWork.text + " " + binding.editPostalCodeWork.text + " " + binding.editCityNameWork.text + " " + binding.editCountryNameWork.text + binding.editBuildingNumberWork.text
+        if(binding.editCityNameWork.text.toString().trim().isNotEmpty() && binding.editCountryNameWork.text.toString().trim().isNotEmpty()) {
+            val guessLocation =  "" + binding.editStreetNameWork.text +
+                                " " + binding.editPostalCodeWork.text +
+                                " " + binding.editCityNameWork.text +
+                                " " + binding.editCountryNameWork.text +
+                                      binding.editBuildingNumberWork.text
+
             try {
-                var guessedLocation = geocoder.getFromLocationName(guessLoaction, 5)
+                val guessedLocation = geocoder.getFromLocationName(guessLocation, 5)
                 if (guessedLocation == null) {
-                    Toast.makeText(requireContext(), "No location found", Toast.LENGTH_SHORT)
+                    Toast.makeText(requireContext(), "No location found", Toast.LENGTH_SHORT).show()
                 } else {
-                    var location: Address = guessedLocation[0]
-                    travelInfo?.toLocation = location
+                    travelInfo?.toLocation = guessedLocation[0]
+                    Toast.makeText(requireContext(), "Location saved successfully", Toast.LENGTH_SHORT).show()
                 }
             } catch (ex: java.lang.Exception) {
-                ex.printStackTrace()
+                Toast.makeText(context, "No location found", Toast.LENGTH_SHORT).show()
             }
         } else {
             Toast.makeText(requireContext(), "Invalid Input, at least City and Country are required", Toast.LENGTH_SHORT).show()
